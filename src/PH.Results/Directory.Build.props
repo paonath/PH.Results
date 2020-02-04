@@ -1,0 +1,32 @@
+<Project>
+  <PropertyGroup>	
+    <LangVersion>latest</LangVersion>
+    <Copyright>Copyright PH 2020 (c) paonath@gmail.com. All rights reserved.</Copyright>
+    <Authors>Paolo Innocenti</Authors>
+    <Company>paonath@gmail.com</Company>
+    <Version>0.0.1</Version>
+
+   
+
+    <!--NUGET -->
+    <PackageVersion>0.0.1</PackageVersion>
+   
+    <RepositoryUrl>https://github.com/paonath/PH.Results</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/paonath/PH.Results</PackageProjectUrl>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+    
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    
+
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
+    <SourceRevisionId>build-$([System.DateTime]::UtcNow.ToString("yyyyMMddHHmmss"))</SourceRevisionId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
+    <SourceRevisionId>build-$([System.DateTime]::UtcNow.ToString("yyyyMMdd"))</SourceRevisionId>
+  </PropertyGroup>
+
+</Project>

@@ -28,15 +28,15 @@ namespace PH.Results
         }
 
         /// <summary>Initialize Ok result</summary>
-        /// <typeparam name="TKey">The type of the key.</typeparam>
+        /// <typeparam name="TIdentifier">The type of the key.</typeparam>
         /// <typeparam name="TContent">The type of the content.</typeparam>
-        /// <param name="identifier">The identifier.</param>
+        /// <param name="id">The identifier.</param>
         /// <param name="content">The content.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TKey,TContent> Ok<TKey,TContent>(TKey identifier, TContent content)
+        public static IResult<TIdentifier,TContent> Ok<TIdentifier,TContent>(TIdentifier id, TContent content)
         {
-            return new ResultOk<TKey,TContent>(identifier, content);
+            return new ResultOk<TIdentifier,TContent>(id, content);
         }
 
 
@@ -57,7 +57,7 @@ namespace PH.Results
         /// <returns></returns>
         [NotNull]
         private static IResult<TContent> RaiseFail<TContent>(object id, [NotNull] IError error, string memberName,
-                                                             string sourceFilePath, int sourceLineNumber)
+                                                              string sourceFilePath, int sourceLineNumber)
         {
             if (error is MainError e)
             {
@@ -694,6 +694,4 @@ namespace PH.Results
         #endregion
 
     }
-
-
 }

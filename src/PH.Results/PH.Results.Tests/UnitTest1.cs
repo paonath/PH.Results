@@ -12,7 +12,7 @@ namespace PH.Results.Tests
             DateTime d = DateTime.UtcNow;
             
 
-            var r = ResultFactory.Ok(d, d);
+            IResult<string,DateTime> r = ResultFactory.Ok("given id for result", d);
 
 
             Assert.True(r.OnError == false);

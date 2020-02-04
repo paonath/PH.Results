@@ -1,5 +1,12 @@
 ﻿namespace PH.Results.Internals
 {
+    /// <summary>
+    /// Generic Result Ok instance
+    /// </summary>
+    /// <typeparam name="TIdentifier">The type of the identifier.</typeparam>
+    /// <typeparam name="TContent">The type of the content.</typeparam>
+    /// <seealso cref="PH.Results.Internals.Result{TIdentifier, TContent}" />
+    /// <seealso cref="PH.Results.Internals.IResultOk{TIdentifier, TContent}" />
     internal class ResultOk<TIdentifier, TContent> : Result<TIdentifier, TContent>, IResultOk<TIdentifier, TContent>
     {
         /// <summary>
@@ -12,6 +19,12 @@
         }
     }
 
+    /// <summary>
+    /// Generic Result Ok instance
+    /// </summary>
+    /// <typeparam name="TContent">The type of the content.</typeparam>
+    /// <seealso cref="PH.Results.Internals.Result{TIdentifier, TContent}" />
+    /// <seealso cref="PH.Results.Internals.IResultOk{TIdentifier, TContent}" />
     internal class ResultOk<TContent> : ResultOk<object, TContent>, IResultOk<TContent>
     {
         /// <summary>

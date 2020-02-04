@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PH.Results", "PH.Results\PH.Results.csproj", "{48A307A6-A427-4EB7-B666-33925F8D9CDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PH.Results.Tests", "PH.Results.Tests\PH.Results.Tests.csproj", "{93C41406-62D1-4F36-B977-2FF6E5C3C950}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PH.Results.Tests", "PH.Results.Tests\PH.Results.Tests.csproj", "{93C41406-62D1-4F36-B977-2FF6E5C3C950}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E1ED24E4-6239-434A-AF32-00D21A5D63E6}"
+	ProjectSection(SolutionItems) = preProject
+		batchBuild.bat = batchBuild.bat
+		Directory.Build.props = Directory.Build.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

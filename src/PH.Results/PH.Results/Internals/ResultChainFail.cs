@@ -1,9 +1,20 @@
 ﻿namespace PH.Results.Internals
 {
+    /// <summary>
+    /// Generic Result Fail starting from another fail result
+    /// </summary>
+    /// <typeparam name="TIdentifier">The type of the identifier.</typeparam>
+    /// <typeparam name="TContent">The type of the content.</typeparam>
+    /// <typeparam name="TOtherContent">The type of the other content.</typeparam>
+    /// <seealso cref="PH.Results.Internals.ResultFail{TIdentifier, TContent}" />
+    /// <seealso cref="PH.Results.Internals.IResultFail{TIdentifier, TContent}" />
+    /// <seealso cref="PH.Results.IResult{TIdentifier, TContent}" />
     internal class ResultChainFail<TIdentifier, TContent, TOtherContent> : ResultFail<TIdentifier, TContent>,
                                                                            IResultFail<TIdentifier, TContent>,
                                                                            IResult<TIdentifier, TContent>
     {
+        /// <summary>Gets the inner result on error.</summary>
+        /// <value>The inner result on error.</value>
         public IResult<TIdentifier, TOtherContent> InnerResultOnError { get; }
 
         /// <summary>
@@ -30,6 +41,14 @@
         }
     }
 
+    /// <summary>
+    /// Generic Result Fail starting from another fail result
+    /// </summary>
+    /// <typeparam name="TContent">The type of the content.</typeparam>
+    /// <typeparam name="TOtherContent">The type of the other content.</typeparam>
+    /// <seealso cref="PH.Results.Internals.ResultFail{TIdentifier, TContent}" />
+    /// <seealso cref="PH.Results.Internals.IResultFail{TIdentifier, TContent}" />
+    /// <seealso cref="PH.Results.IResult{TIdentifier, TContent}" />
     internal class ResultChainFail<TContent, TOtherContent> : ResultChainFail<object, TContent, TOtherContent>,
                                                               IResultFail<TContent>, IResult<TContent>
     {

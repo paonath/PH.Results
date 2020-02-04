@@ -10,6 +10,10 @@ namespace PH.Results.Internals
     /// <seealso cref="PH.Results.IError" />
     public class Error : IError
     {
+        /// <summary>Initializes a new instance of the <see cref="Error"/> class.</summary>
+        /// <param name="errorMessage">The error message.</param>
+        /// <param name="innerError">The inner error.</param>
+        /// <param name="eventId">The event identifier.</param>
         public Error(string errorMessage, IError innerError = null, EventId? eventId = null)
         {
             ErrorMessage = errorMessage;
@@ -17,12 +21,18 @@ namespace PH.Results.Internals
             ErrorEventId = eventId;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="Error"/> class.</summary>
+        /// <param name="errorMessage">The error message.</param>
+        /// <param name="innerError">The inner error.</param>
         public Error(string errorMessage, IError innerError)
             : this(errorMessage, innerError,null)
         {
             
         }
 
+        /// <summary>Initializes a new instance of the <see cref="Error"/> class.</summary>
+        /// <param name="errorMessage">The error message.</param>
+        /// <param name="eventId">The event identifier.</param>
         public Error(string errorMessage, EventId eventId)
             : this(errorMessage,null, eventId)
         {
@@ -51,6 +61,31 @@ namespace PH.Results.Internals
         public IError InnerError { get; internal set; }
 
 
+        /// <summary>Initializes a new instance of the <see cref="Error"/> class from a exception.</summary>
+        /// <param name="errorMessage">the error message</param>
+        /// <param name="exception">The exception.</param>
+        /// <param name="eventId">The event identifier.</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">exception if null exception given</exception>
+        [NotNull]
+        public static Error FromException(string errorMessage,[NotNull] Exception exception, EventId? eventId = null)
+        {
+            Error r = null;
+            r = null == exception.InnerException 
+                    ? new MainErrorFromException(exception.StackTrace, errorMessage) 
+                    : new Error(exception.Message);
+
+            if (null != eventId)
+            {
+                r.ErrorEventId = eventId;
+            }
+            if (null != exception.InnerException)
+            {
+                r.InnerError = FromException(exception.InnerException);
+            }
+
+            return r;
+        }
         /// <summary>Initializes a new instance of the <see cref="Error"/> class from a exception.</summary>
         /// <param name="exception">The exception.</param>
         /// <param name="eventId">The event identifier.</param>

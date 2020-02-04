@@ -1,5 +1,12 @@
 ﻿namespace PH.Results.Internals
 {
+    /// <summary>
+    /// Generic Result Fail instance
+    /// </summary>
+    /// <typeparam name="TIdentifier">The type of the identifier.</typeparam>
+    /// <typeparam name="TContent">The type of the content.</typeparam>
+    /// <seealso cref="PH.Results.Internals.Result{TIdentifier, TContent}" />
+    /// <seealso cref="PH.Results.Internals.IResultFail{TIdentifier, TContent}" />
     internal class ResultFail<TIdentifier, TContent> : Result<TIdentifier, TContent>, IResultFail<TIdentifier, TContent>
     {
         /// <summary>
@@ -22,7 +29,12 @@
         }
     }
 
-    
+    /// <summary>
+    /// Generic Result Fail instance
+    /// </summary>
+    /// <typeparam name="TContent">The type of the content.</typeparam>
+    /// <seealso cref="PH.Results.Internals.Result{TIdentifier, TContent}" />
+    /// <seealso cref="PH.Results.Internals.IResultFail{TIdentifier, TContent}" />
     internal class ResultFail<TContent> : ResultFail<object, TContent>, IResultFail<TContent>
     {
         /// <summary>
