@@ -5,7 +5,7 @@
     /// </summary>
     /// <typeparam name="TIdentifier">The type of the identifier.</typeparam>
     /// <typeparam name="TContent">Type of the Result content</typeparam>
-    public interface IResultFail<out TIdentifier, out TContent> : IResult<TIdentifier,TContent> 
+    public interface IResultFail<out TIdentifier, out TContent> : IResultFail<TContent> , IResult<TIdentifier,TContent>
     {
 
     }
@@ -14,7 +14,7 @@
     /// Generic Result Fail
     /// </summary>
     /// <typeparam name="TContent">Type of the Result content</typeparam>
-    public interface IResultFail<out TContent> : IResultFail<object,TContent> , IResult<TContent> 
+    public interface IResultFail<out TContent> : IResult<TContent> 
     {
         
     }

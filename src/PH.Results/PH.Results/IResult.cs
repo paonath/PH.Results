@@ -3,16 +3,28 @@
 namespace PH.Results
 {
     
+
     /// <summary>
     /// Transport object result wrapping a contents
     /// </summary>
     /// <typeparam name="TIdentifier">The type of the identifier.</typeparam>
     /// <typeparam name="TContent">Type of the Result content</typeparam>
-    public interface IResult<out TIdentifier, out TContent> 
+    public interface IResult<out TIdentifier, out TContent> : IResult<TContent>
+    {
+        /// <summary>Gets the typed identifier.</summary>
+        /// <value>The typed identifier.</value>
+        TIdentifier TypedIdentifier { get; }
+    }
+
+    /// <summary>
+    /// Transport object result wrapping a contents
+    /// </summary>
+    /// <typeparam name="TContent">Type of the Result content</typeparam>
+    public interface IResult<out TContent> //: IResult<object,TContent>
     {
         /// <summary>Gets the identifier.</summary>
         /// <value>The identifier.</value>
-        TIdentifier Identifier { get; }
+        object Identifier { get; }
 
         /// <summary>Gets the UTC time when the Result was generated.</summary>
         /// <value>The UTC time.</value>
@@ -41,15 +53,6 @@ namespace PH.Results
         /// Result Content
         /// </summary>
         TContent Content { get; }
-    }
-
-    /// <summary>
-    /// Transport object result wrapping a contents
-    /// </summary>
-    /// <typeparam name="TContent">Type of the Result content</typeparam>
-    public interface IResult<out TContent> : IResult<object,TContent>
-    {
-        
     }
 
 

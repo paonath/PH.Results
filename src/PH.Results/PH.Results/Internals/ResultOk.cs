@@ -7,7 +7,7 @@
     /// <typeparam name="TContent">The type of the content.</typeparam>
     /// <seealso cref="PH.Results.Internals.Result{TIdentifier, TContent}" />
     /// <seealso cref="PH.Results.Internals.IResultOk{TIdentifier, TContent}" />
-    internal class ResultOk<TIdentifier, TContent> : Result<TIdentifier, TContent>, IResultOk<TIdentifier, TContent>
+    internal class ResultOk<TIdentifier, TContent> : Result<TIdentifier, TContent>, IResultOk<TIdentifier, TContent> , IResult<TIdentifier,TContent>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Result{TIdentifier, TContent}"/> class.
@@ -25,14 +25,15 @@
     /// <typeparam name="TContent">The type of the content.</typeparam>
     /// <seealso cref="PH.Results.Internals.Result{TIdentifier, TContent}" />
     /// <seealso cref="PH.Results.Internals.IResultOk{TIdentifier, TContent}" />
-    internal class ResultOk<TContent> : ResultOk<object, TContent>, IResultOk<TContent>
+    internal class ResultOk<TContent> : Result<TContent>, IResultOk<TContent>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Result{TIdentifier, TContent}"/> class.
         /// </summary>
         /// <param name="identifier">The identifier.</param>
         /// <param name="content">The content.</param>
-        internal ResultOk(object identifier, TContent content) : base(identifier, content)
+        internal ResultOk(object identifier, TContent content) 
+            : base(identifier, content)
         {
         }
     }

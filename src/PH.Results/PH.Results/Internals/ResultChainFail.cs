@@ -1,15 +1,6 @@
 ﻿namespace PH.Results.Internals
 {
-    /// <summary>
-    /// Generic Result Fail starting from another fail result
-    /// </summary>
-    /// <typeparam name="TIdentifier">The type of the identifier.</typeparam>
-    /// <typeparam name="TContent">The type of the content.</typeparam>
-    /// <typeparam name="TOtherContent">The type of the other content.</typeparam>
-    /// <seealso cref="PH.Results.Internals.ResultFail{TIdentifier, TContent}" />
-    /// <seealso cref="PH.Results.Internals.IResultFail{TIdentifier, TContent}" />
-    /// <seealso cref="PH.Results.IResult{TIdentifier, TContent}" />
-    internal class ResultChainFail<TIdentifier, TContent, TOtherContent> : ResultFail<TIdentifier, TContent>,
+    internal class ResultChainFail<TIdentifier, TContent, TOtherContent> : ResultFail<TIdentifier,TContent>,
                                                                            IResultFail<TIdentifier, TContent>,
                                                                            IResult<TIdentifier, TContent>
     {
@@ -24,10 +15,11 @@
         /// <param name="content">The content.</param>
         /// <param name="error">The error.</param>
         /// <param name="innerResultOnError">The inner result on error</param>
-        internal ResultChainFail(TIdentifier identifier, TContent content, IError error, IResult<TIdentifier, TOtherContent> innerResultOnError) : base(identifier, content, error)
+        internal ResultChainFail(TIdentifier identifier, TContent content, IError error, IResult<TIdentifier,TOtherContent> innerResultOnError) : base(identifier, content, error)
         {
             InnerResultOnError = innerResultOnError;
         }
+
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Result{TIdentifier, TContent}"/> class on Error.
@@ -39,6 +31,8 @@
         {
             InnerResultOnError = innerResultOnError;
         }
+
+      
     }
 
     /// <summary>
@@ -49,9 +43,13 @@
     /// <seealso cref="PH.Results.Internals.ResultFail{TIdentifier, TContent}" />
     /// <seealso cref="PH.Results.Internals.IResultFail{TIdentifier, TContent}" />
     /// <seealso cref="PH.Results.IResult{TIdentifier, TContent}" />
-    internal class ResultChainFail<TContent, TOtherContent> : ResultChainFail<object, TContent, TOtherContent>,
+    internal class ResultChainFail<TContent, TOtherContent> : ResultFail<TContent>,
                                                               IResultFail<TContent>, IResult<TContent>
     {
+        /// <summary>Gets the inner result on error.</summary>
+        /// <value>The inner result on error.</value>
+        public IResult<TOtherContent> InnerResultOnError { get; }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Result{TIdentifier, TContent}"/> class.
         /// </summary>
@@ -59,8 +57,9 @@
         /// <param name="content">The content.</param>
         /// <param name="error">The error.</param>
         /// <param name="innerResultOnError">The inner result on error</param>
-        internal ResultChainFail(object identifier, TContent content, IError error, IResult<object, TOtherContent> innerResultOnError) : base(identifier, content, error, innerResultOnError)
+        internal ResultChainFail(object identifier, TContent content, IError error, IResult<TOtherContent> innerResultOnError) : base(identifier, content, error)
         {
+            InnerResultOnError = innerResultOnError;
         }
 
         /// <summary>
@@ -69,8 +68,9 @@
         /// <param name="identifier">The identifier.</param>
         /// <param name="error">The error.</param>
         /// <param name="innerResultOnError"></param>
-        internal ResultChainFail(object identifier, IError error, IResult<object, TOtherContent> innerResultOnError) : base(identifier, error, innerResultOnError)
+        internal ResultChainFail(object identifier, IError error, IResult<TOtherContent> innerResultOnError) : base(identifier, error)
         {
+            InnerResultOnError = innerResultOnError;
         }
     }
 }

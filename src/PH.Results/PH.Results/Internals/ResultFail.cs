@@ -7,7 +7,7 @@
     /// <typeparam name="TContent">The type of the content.</typeparam>
     /// <seealso cref="PH.Results.Internals.Result{TIdentifier, TContent}" />
     /// <seealso cref="PH.Results.Internals.IResultFail{TIdentifier, TContent}" />
-    internal class ResultFail<TIdentifier, TContent> : Result<TIdentifier, TContent>, IResultFail<TIdentifier, TContent>
+    internal class ResultFail<TIdentifier, TContent> : Result<TIdentifier,TContent>, IResultFail<TIdentifier, TContent> , IResult<TIdentifier, TContent>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Result{TIdentifier, TContent}"/> class.
@@ -27,6 +27,7 @@
         internal ResultFail(TIdentifier identifier, IError error) : base(identifier, error)
         {
         }
+
     }
 
     /// <summary>
@@ -35,7 +36,7 @@
     /// <typeparam name="TContent">The type of the content.</typeparam>
     /// <seealso cref="PH.Results.Internals.Result{TIdentifier, TContent}" />
     /// <seealso cref="PH.Results.Internals.IResultFail{TIdentifier, TContent}" />
-    internal class ResultFail<TContent> : ResultFail<object, TContent>, IResultFail<TContent>
+    internal class ResultFail<TContent> : Result<TContent>, IResultFail<TContent>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Result{TIdentifier, TContent}"/> class.

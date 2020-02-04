@@ -8,15 +8,50 @@ namespace PH.Results.Internals
     /// <typeparam name="TIdentifier">The type of the identifier.</typeparam>
     /// <typeparam name="TContent"></typeparam>
     /// <seealso cref="PH.Results.IResult{TIdentifier, TContent}" />
-    public abstract class Result<TIdentifier, TContent> : IResult<TIdentifier, TContent>
+    public abstract class Result<TIdentifier, TContent> : Result<TContent> , IResult<TIdentifier, TContent>
     {
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Result{TIdentifier, TContent}"/> class.
         /// </summary>
         /// <param name="identifier">The identifier.</param>
         /// <param name="content">The content.</param>
         /// <param name="error">The error.</param>
-        protected internal Result(TIdentifier identifier, TContent content, IError error = null)
+        protected Result(TIdentifier identifier, TContent content,  IError error = null) : base(identifier, content, error)
+        {
+            TypedIdentifier = identifier;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Result{TContent}"/> class on Error.
+        /// </summary>
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="error">The error.</param>
+        protected Result(TIdentifier identifier, IError error) : base(identifier, error)
+        {
+            TypedIdentifier = identifier;
+        }
+
+        /// <summary>Gets the typed identifier.</summary>
+        /// <value>The typed identifier.</value>
+        public TIdentifier TypedIdentifier { get; }
+    }
+
+    /// <summary>
+    /// Implementation of Transport object result wrapping a contents
+    /// </summary>
+    /// <typeparam name="TContent">The type of the content.</typeparam>
+    /// <seealso cref="PH.Results.IResult{TIdentifier, TContent}" />
+    public abstract class Result<TContent> : IResult<TContent> 
+    {
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Result{TContent}"/> class.
+        /// </summary>
+        /// <param name="identifier">The identifier.</param>
+        /// <param name="content">The content.</param>
+        /// <param name="error">The error.</param>
+        protected internal Result(object identifier, TContent content, IError error = null)
         {
             UtcTime    = DateTime.UtcNow;
             Identifier = identifier;
@@ -26,11 +61,11 @@ namespace PH.Results.Internals
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Result{TIdentifier, TContent}"/> class on Error.
+        /// Initializes a new instance of the <see cref="Result{TContent}"/> class on Error.
         /// </summary>
         /// <param name="identifier">The identifier.</param>
         /// <param name="error">The error.</param>
-        protected internal Result(TIdentifier identifier, IError error)
+        protected internal Result(object identifier, IError error)
         {
             UtcTime = DateTime.UtcNow;
             Error = error;
@@ -45,7 +80,7 @@ namespace PH.Results.Internals
 
         /// <summary>Gets the identifier.</summary>
         /// <value>The identifier.</value>
-        public TIdentifier Identifier { get; }
+        public object Identifier { get; }
 
         /// <summary>
         /// Gets a value indicating whether on error.
@@ -71,38 +106,8 @@ namespace PH.Results.Internals
         ///   <c>true</c> if null content [Content not set]; otherwise, <c>false</c>.
         /// </value>
         public bool NullContent => _nullContent;
-    }
 
-    /// <summary>
-    /// Implementation of Transport object result wrapping a contents
-    /// </summary>
-    /// <typeparam name="TContent">The type of the content.</typeparam>
-    /// <seealso cref="PH.Results.IResult{TIdentifier, TContent}" />
-    public abstract class Result<TContent> : Result<object,TContent>, IResult<TContent> 
-    {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Result{TContent}"/> class.
-        /// </summary>
-        /// <param name="identifier">The identifier.</param>
-        /// <param name="content">The content.</param>
-        /// <param name="error">The error.</param>
-        protected internal Result(object identifier, TContent content, IError error = null) 
-            : base(identifier, content, error)
-        {
-        }
-
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Result{TContent}"/> class.
-        /// </summary>
-        /// <param name="identifier">The identifier.</param>
-        /// <param name="error">The error.</param>
-        protected internal Result(object identifier, IError error)
-            :base(identifier, error)
-        {
-            
-        }
-
+        
     }
 
 

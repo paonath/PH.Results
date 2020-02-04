@@ -56,7 +56,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        private static IResult<TContent> RaiseFail<TContent>(object id, [NotNull] IError error, string memberName,
+        private static Result<TContent> RaiseFail<TContent>(object id, [NotNull] IError error, string memberName,
                                                               string sourceFilePath, int sourceLineNumber)
         {
             if (error is MainError e)
@@ -79,7 +79,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        private static IResult<TContent> RaiseFail<TContent>(object id, TContent content, [NotNull] IError error, string memberName,
+        private static Result<TContent> RaiseFail<TContent>(object id, TContent content, [NotNull] IError error, string memberName,
                                                              string sourceFilePath, int sourceLineNumber)
         {
             if (error is MainError e)
@@ -105,7 +105,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        private static IResult<TIdentifier,TContent> RaiseFail<TIdentifier,TContent>(TIdentifier id, [NotNull] IError error, string memberName, string sourceFilePath,
+        private static Result<TIdentifier,TContent> RaiseFail<TIdentifier,TContent>(TIdentifier id, [NotNull] IError error, string memberName, string sourceFilePath,
                                                                                      int sourceLineNumber)
         {
             if (error is MainError e)
@@ -129,7 +129,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        private static IResult<TIdentifier,TContent> RaiseFail<TIdentifier,TContent>(TIdentifier id, TContent content, [NotNull] IError error, string memberName, string sourceFilePath,
+        private static Result<TIdentifier,TContent> RaiseFail<TIdentifier,TContent>(TIdentifier id, TContent content, [NotNull] IError error, string memberName, string sourceFilePath,
                                                                                      int sourceLineNumber)
         {
             if (error is MainError e)
@@ -151,7 +151,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        private static IResult<TContent> RaiseFailFromResult<TContent,TOtherContent>(IResult<TOtherContent> otherResultOnError, string memberName, string sourceFilePath, int sourceLineNumber)
+        private static Result<TContent> RaiseFailFromResult<TContent,TOtherContent>(IResult<TOtherContent> otherResultOnError, string memberName, string sourceFilePath, int sourceLineNumber)
         {
             var e = new MainError(memberName, sourceFilePath, sourceLineNumber, otherResultOnError.Error.ErrorMessage,
                                   otherResultOnError.Error?.InnerError, otherResultOnError.Error?.ErrorEventId);
@@ -170,7 +170,7 @@ namespace PH.Results
         /// <param name="sourceFilePath">The source file path.</param>
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
-        private static IResult<TContent> RaiseFailFromResult<TContent,TOtherContent>(string errorMessage, IResult<TOtherContent> otherResultOnError, string memberName, string sourceFilePath, int sourceLineNumber)
+        private static Result<TContent> RaiseFailFromResult<TContent,TOtherContent>(string errorMessage, IResult<TOtherContent> otherResultOnError, string memberName, string sourceFilePath, int sourceLineNumber)
         {
             var e = new MainError(memberName, sourceFilePath, sourceLineNumber, errorMessage,
                                   otherResultOnError.Error?.InnerError, otherResultOnError.Error?.ErrorEventId);
@@ -189,12 +189,12 @@ namespace PH.Results
         /// <param name="sourceFilePath">The source file path.</param>
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
-        private static IResult<TIdentifier,TContent> RaiseFailFromResult<TIdentifier,TContent,TOtherContent>(IResult<TIdentifier,TOtherContent> otherResultOnError, string memberName, string sourceFilePath, int sourceLineNumber)
+        private static Result<TIdentifier,TContent> RaiseFailFromResult<TIdentifier,TContent,TOtherContent>(IResult<TIdentifier,TOtherContent> otherResultOnError, string memberName, string sourceFilePath, int sourceLineNumber)
         {
             var e = new MainError(memberName, sourceFilePath, sourceLineNumber, otherResultOnError.Error.ErrorMessage,
                                   otherResultOnError.Error?.InnerError, otherResultOnError.Error?.ErrorEventId);
 
-            var m = new ResultChainFail<TIdentifier,TContent, TOtherContent>(otherResultOnError.Identifier,
+            var m = new ResultChainFail<TIdentifier,TContent, TOtherContent>(otherResultOnError.TypedIdentifier,
                                                                             e, otherResultOnError);
             return m;
         }
@@ -209,12 +209,12 @@ namespace PH.Results
         /// <param name="sourceFilePath">The source file path.</param>
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
-        private static IResult<TIdentifier,TContent> RaiseFailFromResult<TIdentifier,TContent,TOtherContent>(string errorMessage,IResult<TIdentifier,TOtherContent> otherResultOnError, string memberName, string sourceFilePath, int sourceLineNumber)
+        private static Result<TIdentifier,TContent> RaiseFailFromResult<TIdentifier,TContent,TOtherContent>(string errorMessage,IResult<TIdentifier,TOtherContent> otherResultOnError, string memberName, string sourceFilePath, int sourceLineNumber)
         {
             var e = new MainError(memberName, sourceFilePath, sourceLineNumber, errorMessage,
                                   otherResultOnError.Error?.InnerError, otherResultOnError.Error?.ErrorEventId);
 
-            var m = new ResultChainFail<TIdentifier,TContent, TOtherContent>(otherResultOnError.Identifier,
+            var m = new ResultChainFail<TIdentifier,TContent, TOtherContent>(otherResultOnError.TypedIdentifier,
                                                                              e, otherResultOnError);
             return m;
         }
@@ -231,7 +231,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TContent> Fail<TContent>(object id, [NotNull] IError error,
+        public static Result<TContent> Fail<TContent>(object id, [NotNull] IError error,
                                                        [CallerMemberName]
                                                        string memberName = "",
                                                        [CallerFilePath]
@@ -252,7 +252,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TIdentifier,TContent> Fail<TIdentifier,TContent>(TIdentifier id, [NotNull] IError error,
+        public static Result<TIdentifier,TContent> Fail<TIdentifier,TContent>(TIdentifier id, [NotNull] IError error,
                                                                                [CallerMemberName]
                                                                                string memberName = "",
                                                                                [CallerFilePath]
@@ -275,7 +275,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TContent> Fail<TContent>([NotNull] object id, string message,
+        public static Result<TContent> Fail<TContent>([NotNull] object id, string message,
                                                        [CallerMemberName] string memberName = "",
                                                        [CallerFilePath] string sourceFilePath = "",
                                                        [CallerLineNumber] int sourceLineNumber = 0)
@@ -294,7 +294,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, string message,
+        public static Result<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, string message,
                                                                                [CallerMemberName] string memberName = "",
                                                                                [CallerFilePath] string sourceFilePath = "",
                                                                                [CallerLineNumber] int sourceLineNumber = 0)
@@ -314,7 +314,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TContent> Fail<TContent>([NotNull] object id, string message, EventId eventId,
+        public static Result<TContent> Fail<TContent>([NotNull] object id, string message, EventId eventId,
                                                        [CallerMemberName] string memberName = "",
                                                        [CallerFilePath] string sourceFilePath = "",
                                                        [CallerLineNumber] int sourceLineNumber = 0)
@@ -333,7 +333,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, string message, EventId eventId,
+        public static Result<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, string message, EventId eventId,
                                                                                [CallerMemberName] string memberName = "",
                                                                                [CallerFilePath] string sourceFilePath = "",
                                                                                [CallerLineNumber] int sourceLineNumber = 0)
@@ -352,7 +352,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TContent> Fail<TContent>([NotNull] object id, string message, IError inner,
+        public static Result<TContent> Fail<TContent>([NotNull] object id, string message, IError inner,
                                                        [CallerMemberName] string memberName = "",
                                                        [CallerFilePath] string sourceFilePath = "",
                                                        [CallerLineNumber] int sourceLineNumber = 0)
@@ -371,7 +371,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, string message, IError inner,
+        public static Result<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, string message, IError inner,
                                                                                [CallerMemberName] string memberName = "",
                                                                                [CallerFilePath] string sourceFilePath = "",
                                                                                [CallerLineNumber] int sourceLineNumber = 0)
@@ -391,7 +391,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TContent> Fail<TContent>([NotNull] object id, string message, EventId eventId, IError inner,
+        public static Result<TContent> Fail<TContent>([NotNull] object id, string message, EventId eventId, IError inner,
                                                        [CallerMemberName] string memberName = "",
                                                        [CallerFilePath] string sourceFilePath = "",
                                                        [CallerLineNumber] int sourceLineNumber = 0)
@@ -411,7 +411,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, string message, EventId eventId, IError inner,
+        public static Result<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, string message, EventId eventId, IError inner,
                                                                                [CallerMemberName] string memberName = "",
                                                                                [CallerFilePath] string sourceFilePath = "",
                                                                                [CallerLineNumber] int sourceLineNumber = 0)
@@ -432,7 +432,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TContent> Fail<TContent>([NotNull] object id, [CanBeNull] TContent content, [NotNull] IError error,
+        public static Result<TContent> Fail<TContent>([NotNull] object id, [CanBeNull] TContent content, [NotNull] IError error,
                                                        [CallerMemberName] string memberName = "",
                                                        [CallerFilePath] string sourceFilePath = "",
                                                        [CallerLineNumber] int sourceLineNumber = 0)
@@ -452,7 +452,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, [CanBeNull] TContent content, [NotNull] IError error,
+        public static Result<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, [CanBeNull] TContent content, [NotNull] IError error,
                                                                                [CallerMemberName] string memberName = "",
                                                                                [CallerFilePath] string sourceFilePath = "",
                                                                                [CallerLineNumber] int sourceLineNumber = 0)
@@ -471,7 +471,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TContent> Fail<TContent>([NotNull] object id, [CanBeNull] TContent content, string message,
+        public static Result<TContent> Fail<TContent>([NotNull] object id, [CanBeNull] TContent content, string message,
                                                        [CallerMemberName] string memberName = "",
                                                        [CallerFilePath] string sourceFilePath = "",
                                                        [CallerLineNumber] int sourceLineNumber = 0)
@@ -490,7 +490,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, [CanBeNull] TContent content, string message,
+        public static Result<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, [CanBeNull] TContent content, string message,
                                                                                [CallerMemberName] string memberName = "",
                                                                                [CallerFilePath] string sourceFilePath = "",
                                                                                [CallerLineNumber] int sourceLineNumber = 0)
@@ -509,7 +509,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TContent> Fail<TContent>([NotNull] object id, [CanBeNull] TContent content, string message, EventId eventId,
+        public static Result<TContent> Fail<TContent>([NotNull] object id, [CanBeNull] TContent content, string message, EventId eventId,
                                                        [CallerMemberName] string memberName = "",
                                                        [CallerFilePath] string sourceFilePath = "",
                                                        [CallerLineNumber] int sourceLineNumber = 0)
@@ -530,7 +530,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, [CanBeNull] TContent content, string message, EventId eventId,
+        public static Result<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, [CanBeNull] TContent content, string message, EventId eventId,
                                                                                [CallerMemberName] string memberName = "",
                                                                                [CallerFilePath] string sourceFilePath = "",
                                                                                [CallerLineNumber] int sourceLineNumber = 0)
@@ -549,7 +549,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TContent> Fail<TContent>([NotNull] object id, [CanBeNull] TContent content, string message, IError inner,
+        public static Result<TContent> Fail<TContent>([NotNull] object id, [CanBeNull] TContent content, string message, IError inner,
                                                        [CallerMemberName] string memberName = "",
                                                        [CallerFilePath] string sourceFilePath = "",
                                                        [CallerLineNumber] int sourceLineNumber = 0)
@@ -569,7 +569,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, [CanBeNull] TContent content, string message, IError inner,
+        public static Result<TIdentifier,TContent> Fail<TIdentifier,TContent>([NotNull] TIdentifier id, [CanBeNull] TContent content, string message, IError inner,
                                                                                [CallerMemberName] string memberName = "",
                                                                                [CallerFilePath] string sourceFilePath = "",
                                                                                [CallerLineNumber] int sourceLineNumber = 0)
@@ -589,7 +589,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TContent> Fail<TContent>([NotNull] object id, [CanBeNull] TContent content,
+        public static Result<TContent> Fail<TContent>([NotNull] object id, [CanBeNull] TContent content,
                                                        string message, EventId eventId, IError inner,
                                                        [CallerMemberName] string memberName = "",
                                                        [CallerFilePath] string sourceFilePath = "",
@@ -611,7 +611,7 @@ namespace PH.Results
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
         [NotNull]
-        public static IResult<TIdentifier, TContent> Fail<TIdentifier, TContent>([NotNull] TIdentifier id, [CanBeNull] TContent content, string message, EventId eventId, IError inner,
+        public static Result<TIdentifier, TContent> Fail<TIdentifier, TContent>([NotNull] TIdentifier id, [CanBeNull] TContent content, string message, EventId eventId, IError inner,
                                                                                  [CallerMemberName] string memberName = "",
                                                                                  [CallerFilePath] string sourceFilePath = "",
                                                                                  [CallerLineNumber] int sourceLineNumber = 0)
@@ -628,7 +628,7 @@ namespace PH.Results
         /// <param name="sourceFilePath">The source file path.</param>
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
-        public static IResult<TContent> FailFromResult<TContent,TOtherContent>([NotNull] IResult<TOtherContent> otherResultOnError,
+        public static Result<TContent> FailFromResult<TContent,TOtherContent>([NotNull] IResult<TOtherContent> otherResultOnError,
                                                               [CallerMemberName] string memberName = "",
                                                               [CallerFilePath] string sourceFilePath = "",
                                                               [CallerLineNumber] int sourceLineNumber = 0)
@@ -646,7 +646,7 @@ namespace PH.Results
         /// <param name="sourceFilePath">The source file path.</param>
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
-        public static IResult<TContent> FailFromResult<TContent,TOtherContent>(string errorMessage,[NotNull] IResult<TOtherContent> otherResultOnError,
+        public static Result<TContent> FailFromResult<TContent,TOtherContent>(string errorMessage,[NotNull] IResult<TOtherContent> otherResultOnError,
                                                                                [CallerMemberName] string memberName = "",
                                                                                [CallerFilePath] string sourceFilePath = "",
                                                                                [CallerLineNumber] int sourceLineNumber = 0)
@@ -664,7 +664,7 @@ namespace PH.Results
         /// <param name="sourceFilePath">The source file path.</param>
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
-        public static IResult<TIdentifier,TContent> FailFromResult<TIdentifier,TContent,TOtherContent>([NotNull] IResult<TIdentifier,TOtherContent> otherResultOnError,
+        public static Result<TIdentifier,TContent> FailFromResult<TIdentifier,TContent,TOtherContent>([NotNull] IResult<TIdentifier,TOtherContent> otherResultOnError,
                                                                                                       [CallerMemberName] string memberName = "",
                                                                                                       [CallerFilePath] string sourceFilePath = "",
                                                                                                       [CallerLineNumber] int sourceLineNumber = 0)
@@ -683,7 +683,7 @@ namespace PH.Results
         /// <param name="sourceFilePath">The source file path.</param>
         /// <param name="sourceLineNumber">The source line number.</param>
         /// <returns></returns>
-        public static IResult<TIdentifier,TContent> FailFromResult<TIdentifier,TContent,TOtherContent>(string errorMessage,[NotNull] IResult<TIdentifier,TOtherContent> otherResultOnError,
+        public static Result<TIdentifier,TContent> FailFromResult<TIdentifier,TContent,TOtherContent>(string errorMessage,[NotNull] IResult<TIdentifier,TOtherContent> otherResultOnError,
                                                                                                        [CallerMemberName] string memberName = "",
                                                                                                        [CallerFilePath] string sourceFilePath = "",
                                                                                                        [CallerLineNumber] int sourceLineNumber = 0)
