@@ -4,12 +4,12 @@
     <Copyright>Copyright PH 2020 (c) paonath@gmail.com. All rights reserved.</Copyright>
     <Authors>Paolo Innocenti</Authors>
     <Company>paonath@gmail.com</Company>
-    <Version>0.0.2</Version>
+    <Version>0.0.3</Version>
 
    
 
     <!--NUGET -->
-    <PackageVersion>0.0.2</PackageVersion>
+    <PackageVersion>0.0.3</PackageVersion>
    
     <RepositoryUrl>https://github.com/paonath/PH.Results</RepositoryUrl>
     <PackageProjectUrl>https://github.com/paonath/PH.Results</PackageProjectUrl>

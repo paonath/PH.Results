@@ -14,7 +14,7 @@ namespace PH.Results.Internals
         /// <param name="errorMessage">The error message.</param>
         /// <param name="innerError">The inner error.</param>
         /// <param name="eventId">The event identifier.</param>
-        public Error(string errorMessage, IError innerError = null, EventId? eventId = null)
+        public Error([NotNull] string errorMessage, [CanBeNull] IError innerError = null,[CanBeNull] EventId? eventId = null)
         {
             ErrorMessage = errorMessage;
             InnerError   = innerError;
@@ -24,7 +24,7 @@ namespace PH.Results.Internals
         /// <summary>Initializes a new instance of the <see cref="Error"/> class.</summary>
         /// <param name="errorMessage">The error message.</param>
         /// <param name="innerError">The inner error.</param>
-        public Error(string errorMessage, IError innerError)
+        public Error([NotNull] string errorMessage, [NotNull] IError innerError)
             : this(errorMessage, innerError,null)
         {
             
@@ -33,7 +33,7 @@ namespace PH.Results.Internals
         /// <summary>Initializes a new instance of the <see cref="Error"/> class.</summary>
         /// <param name="errorMessage">The error message.</param>
         /// <param name="eventId">The event identifier.</param>
-        public Error(string errorMessage, EventId eventId)
+        public Error([NotNull] string errorMessage, EventId eventId)
             : this(errorMessage,null, eventId)
         {
             

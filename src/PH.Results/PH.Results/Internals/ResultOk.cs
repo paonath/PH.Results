@@ -1,4 +1,6 @@
-﻿namespace PH.Results.Internals
+﻿using JetBrains.Annotations;
+
+namespace PH.Results.Internals
 {
     /// <summary>
     /// Generic Result Ok instance
@@ -14,7 +16,7 @@
         /// </summary>
         /// <param name="identifier">The identifier.</param>
         /// <param name="content">The content.</param>
-        internal ResultOk(TIdentifier identifier, TContent content) : base(identifier, content, null)
+        internal ResultOk([NotNull] TIdentifier identifier, [NotNull] TContent content) : base(identifier, content, null)
         {
         }
     }
@@ -32,7 +34,7 @@
         /// </summary>
         /// <param name="identifier">The identifier.</param>
         /// <param name="content">The content.</param>
-        internal ResultOk(object identifier, TContent content) 
+        internal ResultOk([NotNull] object identifier, [NotNull] TContent content) 
             : base(identifier, content)
         {
         }

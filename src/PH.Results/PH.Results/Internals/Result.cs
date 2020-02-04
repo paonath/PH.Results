@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace PH.Results.Internals
 {
@@ -17,7 +18,7 @@ namespace PH.Results.Internals
         /// <param name="identifier">The identifier.</param>
         /// <param name="content">The content.</param>
         /// <param name="error">The error.</param>
-        protected Result(TIdentifier identifier, TContent content,  IError error = null) : base(identifier, content, error)
+        protected Result([NotNull] TIdentifier identifier, [NotNull] TContent content,  [CanBeNull] IError error = null) : base(identifier, content, error)
         {
             TypedIdentifier = identifier;
         }
@@ -27,7 +28,7 @@ namespace PH.Results.Internals
         /// </summary>
         /// <param name="identifier">The identifier.</param>
         /// <param name="error">The error.</param>
-        protected Result(TIdentifier identifier, IError error) : base(identifier, error)
+        protected Result([NotNull] TIdentifier identifier, [NotNull] IError error) : base(identifier, error)
         {
             TypedIdentifier = identifier;
         }
@@ -51,7 +52,7 @@ namespace PH.Results.Internals
         /// <param name="identifier">The identifier.</param>
         /// <param name="content">The content.</param>
         /// <param name="error">The error.</param>
-        protected internal Result(object identifier, TContent content, IError error = null)
+        protected internal Result([NotNull] object identifier, [NotNull] TContent content, [CanBeNull] IError error = null)
         {
             UtcTime    = DateTime.UtcNow;
             Identifier = identifier;
@@ -65,7 +66,7 @@ namespace PH.Results.Internals
         /// </summary>
         /// <param name="identifier">The identifier.</param>
         /// <param name="error">The error.</param>
-        protected internal Result(object identifier, IError error)
+        protected internal Result([NotNull] object identifier, [NotNull] IError error)
         {
             UtcTime = DateTime.UtcNow;
             Error = error;

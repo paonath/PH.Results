@@ -1,4 +1,6 @@
-﻿namespace PH.Results.Internals
+﻿using JetBrains.Annotations;
+
+namespace PH.Results.Internals
 {
     /// <summary>
     /// Generic Result Fail instance
@@ -15,7 +17,7 @@
         /// <param name="identifier">The identifier.</param>
         /// <param name="content">The content.</param>
         /// <param name="error">The error.</param>
-        internal ResultFail(TIdentifier identifier, TContent content, IError error) : base(identifier, content, error)
+        internal ResultFail([NotNull] TIdentifier identifier, [NotNull] TContent content, IError error) : base(identifier, content, error)
         {
         }
 
@@ -24,7 +26,7 @@
         /// </summary>
         /// <param name="identifier">The identifier.</param>
         /// <param name="error">The error.</param>
-        internal ResultFail(TIdentifier identifier, IError error) : base(identifier, error)
+        internal ResultFail([NotNull] TIdentifier identifier, [NotNull] IError error) : base(identifier, error)
         {
         }
 
@@ -44,7 +46,7 @@
         /// <param name="identifier">The identifier.</param>
         /// <param name="content">The content.</param>
         /// <param name="error">The error.</param>
-        internal ResultFail(object identifier, TContent content, IError error) : base(identifier, content, error)
+        internal ResultFail([NotNull] object identifier, [NotNull] TContent content, IError error) : base(identifier, content, error)
         {
         }
 
@@ -53,7 +55,7 @@
         /// </summary>
         /// <param name="identifier">The identifier.</param>
         /// <param name="error">The error.</param>
-        internal ResultFail(object identifier, IError error) : base(identifier, error)
+        internal ResultFail([NotNull] object identifier, [NotNull] IError error) : base(identifier, error)
         {
         }
     }
