@@ -10,11 +10,22 @@ namespace PH.Results.Internals
     /// <seealso cref="PH.Results.IError" />
     public class Error : IError
     {
+        /// <summary>Gets the error unique identifier.</summary>
+        /// <value>The error unique identifier.</value>
+        public Guid ErrorGuid { get; }
+
+        /// <summary>Initializes a new instance of the <see cref="Error"/> class.</summary>
+        public Error()
+        {
+            ErrorGuid = Guid.NewGuid();
+        }
+
         /// <summary>Initializes a new instance of the <see cref="Error"/> class.</summary>
         /// <param name="errorMessage">The error message.</param>
         /// <param name="innerError">The inner error.</param>
         /// <param name="eventId">The event identifier.</param>
-        public Error([NotNull] string errorMessage, [CanBeNull] IError innerError = null,[CanBeNull] EventId? eventId = null)
+        internal Error([NotNull] string errorMessage, [CanBeNull] IError innerError = null,[CanBeNull] EventId? eventId = null)
+            : this()
         {
             ErrorMessage = errorMessage;
             InnerError   = innerError;
@@ -24,7 +35,7 @@ namespace PH.Results.Internals
         /// <summary>Initializes a new instance of the <see cref="Error"/> class.</summary>
         /// <param name="errorMessage">The error message.</param>
         /// <param name="innerError">The inner error.</param>
-        public Error([NotNull] string errorMessage, [NotNull] IError innerError)
+        internal Error([NotNull] string errorMessage, [NotNull] IError innerError)
             : this(errorMessage, innerError,null)
         {
             
@@ -33,17 +44,17 @@ namespace PH.Results.Internals
         /// <summary>Initializes a new instance of the <see cref="Error"/> class.</summary>
         /// <param name="errorMessage">The error message.</param>
         /// <param name="eventId">The event identifier.</param>
-        public Error([NotNull] string errorMessage, EventId eventId)
+        internal Error([NotNull] string errorMessage, EventId eventId)
             : this(errorMessage,null, eventId)
         {
             
         }
 
-
+        
         /// <summary>
         /// Error Message
         /// </summary>
-        public string ErrorMessage { get; }
+        public string ErrorMessage { get; set; }
 
         /// <summary>
         /// Event Id
@@ -58,7 +69,18 @@ namespace PH.Results.Internals
         /// <summary>
         /// Inner Error
         /// </summary>
-        public IError InnerError { get; internal set; }
+        public IError InnerError { get; set; }
+
+        /// <summary>Return new instance of the specified error</summary>
+        /// <param name="errorMessage">The error message.</param>
+        /// <param name="innerError">The inner error.</param>
+        /// <param name="eventId">The event identifier.</param>
+        /// <returns></returns>
+        [NotNull]
+        public static Error Instance([NotNull] string errorMessage, [CanBeNull] IError innerError = null,[CanBeNull] EventId? eventId = null)
+        {
+            return new Error(errorMessage, innerError, eventId);
+        }
 
 
         /// <summary>Initializes a new instance of the <see cref="Error"/> class from a exception.</summary>
@@ -109,6 +131,29 @@ namespace PH.Results.Internals
             }
 
             return r;
+        }
+
+
+        /// <summary>Serves as the default hash function.</summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
+        /// <summary>Returns a string that represents the current object.</summary>
+        /// <returns>A string that represents the current object.</returns>
+        [NotNull]
+        public override string ToString()
+        {
+            string s = "";
+            if (ErrorEventId.HasValue)
+            {
+                s = $" Ev. Id '{ErrorEventId.Value}' - ";
+            }
+
+            s += $"{ErrorGuid:N}";
+            return $"{ErrorMessage} [{s}]";
         }
     }
 }

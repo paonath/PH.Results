@@ -1,4 +1,6 @@
-﻿namespace PH.Results.Internals
+﻿using JetBrains.Annotations;
+
+namespace PH.Results.Internals
 {
     internal class ResultChainFail<TIdentifier, TContent, TOtherContent> : ResultFail<TIdentifier,TContent>,
                                                                            IResultFail<TIdentifier, TContent>,
@@ -15,7 +17,7 @@
         /// <param name="content">The content.</param>
         /// <param name="error">The error.</param>
         /// <param name="innerResultOnError">The inner result on error</param>
-        internal ResultChainFail(TIdentifier identifier, TContent content, IError error, IResult<TIdentifier,TOtherContent> innerResultOnError) : base(identifier, content, error)
+        internal ResultChainFail([NotNull] TIdentifier identifier, [NotNull] TContent content, IError error, IResult<TIdentifier,TOtherContent> innerResultOnError) : base(identifier, content, error)
         {
             InnerResultOnError = innerResultOnError;
         }
@@ -27,7 +29,7 @@
         /// <param name="identifier">The identifier.</param>
         /// <param name="error">The error.</param>
         /// <param name="innerResultOnError"></param>
-        internal ResultChainFail(TIdentifier identifier, IError error, IResult<TIdentifier, TOtherContent> innerResultOnError) : base(identifier, error)
+        internal ResultChainFail([NotNull] TIdentifier identifier, [NotNull] IError error, IResult<TIdentifier, TOtherContent> innerResultOnError) : base(identifier, error)
         {
             InnerResultOnError = innerResultOnError;
         }
@@ -57,7 +59,7 @@
         /// <param name="content">The content.</param>
         /// <param name="error">The error.</param>
         /// <param name="innerResultOnError">The inner result on error</param>
-        internal ResultChainFail(object identifier, TContent content, IError error, IResult<TOtherContent> innerResultOnError) : base(identifier, content, error)
+        internal ResultChainFail([NotNull] object identifier, [NotNull] TContent content, IError error, IResult<TOtherContent> innerResultOnError) : base(identifier, content, error)
         {
             InnerResultOnError = innerResultOnError;
         }
@@ -68,7 +70,7 @@
         /// <param name="identifier">The identifier.</param>
         /// <param name="error">The error.</param>
         /// <param name="innerResultOnError"></param>
-        internal ResultChainFail(object identifier, IError error, IResult<TOtherContent> innerResultOnError) : base(identifier, error)
+        internal ResultChainFail([NotNull] object identifier, [NotNull] IError error, IResult<TOtherContent> innerResultOnError) : base(identifier, error)
         {
             InnerResultOnError = innerResultOnError;
         }

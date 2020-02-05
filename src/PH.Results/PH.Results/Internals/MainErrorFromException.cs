@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
 
 namespace PH.Results.Internals
 {
@@ -15,7 +16,7 @@ namespace PH.Results.Internals
         /// <param name="errorMessage">The error message.</param>
         /// <param name="innerError">The inner error.</param>
         /// <param name="eventId">The event identifier.</param>
-        internal MainErrorFromException(string stacktrace, string errorMessage, IError innerError = null, EventId? eventId = null) 
+        internal MainErrorFromException(string stacktrace, [NotNull] string errorMessage, IError innerError = null, EventId? eventId = null) 
             : base(string.Empty, stacktrace, -1, errorMessage, innerError, eventId)
         {
         }
@@ -26,7 +27,7 @@ namespace PH.Results.Internals
         /// <param name="stacktrace">The stacktrace.</param>
         /// <param name="errorMessage">The error message.</param>
         /// <param name="innerError">The inner error.</param>
-        internal MainErrorFromException(string stacktrace, string errorMessage, IError innerError) 
+        internal MainErrorFromException(string stacktrace, [NotNull] string errorMessage, IError innerError) 
             : base(string.Empty, stacktrace, -1, errorMessage, innerError)
         {
         }
@@ -37,7 +38,7 @@ namespace PH.Results.Internals
         /// <param name="stacktrace">The stacktrace.</param>
         /// <param name="errorMessage">The error message.</param>
         /// <param name="eventId">The event identifier.</param>
-        internal MainErrorFromException(string stacktrace, string errorMessage, EventId eventId) : base(string.Empty, stacktrace,-1, errorMessage, eventId)
+        internal MainErrorFromException(string stacktrace, [NotNull] string errorMessage, EventId eventId) : base(string.Empty, stacktrace,-1, errorMessage, eventId)
         {
         }
     }

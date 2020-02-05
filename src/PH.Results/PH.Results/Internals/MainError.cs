@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using JetBrains.Annotations;
+using Microsoft.Extensions.Logging;
 
 namespace PH.Results.Internals
 {
@@ -18,7 +19,7 @@ namespace PH.Results.Internals
         /// <param name="errorMessage">The error message.</param>
         /// <param name="innerError">The inner error.</param>
         /// <param name="eventId">The event identifier.</param>
-        internal MainError(string callerMemberName, string callerFilePath, int callerLineNumber,string errorMessage, IError innerError = null, EventId? eventId = null) 
+        internal MainError(string callerMemberName, string callerFilePath, int callerLineNumber,[NotNull] string errorMessage, IError innerError = null, EventId? eventId = null) 
             : base(errorMessage, innerError, eventId)
         {
             CallerMemberName = callerMemberName;
@@ -46,7 +47,7 @@ namespace PH.Results.Internals
         /// <param name="callerLineNumber">The caller line number.</param>
         /// <param name="errorMessage">The error message.</param>
         /// <param name="innerError">The inner error.</param>
-        internal MainError(string callerMemberName, string callerFilePath, int callerLineNumber,string errorMessage, IError innerError) 
+        internal MainError(string callerMemberName, string callerFilePath, int callerLineNumber,[NotNull] string errorMessage, IError innerError) 
             : this(callerMemberName,callerFilePath, callerLineNumber,errorMessage, innerError,null)
         {
 
@@ -60,7 +61,7 @@ namespace PH.Results.Internals
         /// <param name="callerLineNumber">The caller line number.</param>
         /// <param name="errorMessage">The error message.</param>
         /// <param name="eventId">The event identifier.</param>
-        internal MainError(string callerMemberName, string callerFilePath, int callerLineNumber,string errorMessage, EventId eventId) 
+        internal MainError(string callerMemberName, string callerFilePath, int callerLineNumber,[NotNull] string errorMessage, EventId eventId) 
             : this(callerMemberName,callerFilePath, callerLineNumber,errorMessage, null,eventId)
         {
 

@@ -23,9 +23,9 @@ namespace PH.Results.Tests
         [Fact]
         public void FailResultIsOnError()
         {
-            var r = ResultFactory.Fail<DateTime>("fake id", new Error("this is only a test", 1));
+            var r = ResultFactory.Fail<DateTime>("fake id", ResultFactory.BuildError("this is only a test", 1));
 
-            var r2 = ResultFactory.Fail<DateTime>("fake id", DateTime.Now, new Error("this is a test"));
+            var r2 = ResultFactory.Fail<DateTime>("fake id", DateTime.Now, ResultFactory.BuildError("this is a test"));
 
             var r3 = ResultFactory.FailFromResult<object,DateTime>(r2);
 
