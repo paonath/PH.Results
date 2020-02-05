@@ -1,4 +1,4 @@
-# PH.Results
+# PH.Results - [![NuGet Badge](https://buildstats.info/nuget/PH.Results)](https://www.nuget.org/packages/PH.Results/)
 small package to encapsulate results or errors avoiding the use of exceptions
 
 ## Code Examples
