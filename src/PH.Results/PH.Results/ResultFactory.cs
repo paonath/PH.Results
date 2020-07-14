@@ -16,23 +16,23 @@ namespace PH.Results
     {
         #region OK
 
-        /// <summary>Initialize Ok result</summary>
+        /// <summary>Initialize Ok Result wrapping wrapping <see cref="IResult{TContent}.Content">Content</see></summary>
         /// <typeparam name="TContent">The type of the content.</typeparam>
         /// <param name="id">The identifier.</param>
         /// <param name="content">The content.</param>
-        /// <returns>Result OK</returns>
+        /// <returns>Wrapper for <see cref="IResult{TContent}.Content"/> OK</returns>
         [NotNull]
         public static IResult<TContent> Ok<TContent>([NotNull] object id, [NotNull] TContent content)
         {
             return new ResultOk<TContent>(id, content);
         }
 
-        /// <summary>Initialize Ok result</summary>
+        /// <summary>Initialize Ok Result wrapping <see cref="IResult{TContent}.Content">Content</see>  </summary>
         /// <typeparam name="TIdentifier">The type of the key.</typeparam>
         /// <typeparam name="TContent">The type of the content.</typeparam>
         /// <param name="id">The identifier.</param>
         /// <param name="content">The content.</param>
-        /// <returns></returns>
+        /// <returns>Wrapper for <see cref="IResult{TContent}.Content"/> OK</returns>
         [NotNull]
         public static IResult<TIdentifier,TContent> Ok<TIdentifier,TContent>([NotNull] TIdentifier id, [NotNull] TContent content)
         {
@@ -155,7 +155,7 @@ namespace PH.Results
         private static Result<TContent> RaiseFailFromResult<TContent,TOtherContent>([NotNull] IResult<TOtherContent> otherResultOnError, string memberName, string sourceFilePath, int sourceLineNumber)
         {
             var e = new MainError(memberName, sourceFilePath, sourceLineNumber, otherResultOnError.Error.ErrorMessage,
-                                  otherResultOnError.Error?.InnerError, otherResultOnError.Error?.ErrorEventId);
+                                  otherResultOnError.Error, otherResultOnError.Error?.ErrorEventId);
 
             var m = new ResultChainFail<TContent, TOtherContent>(otherResultOnError.Identifier,
                                                                          e, otherResultOnError);
@@ -725,6 +725,8 @@ namespace PH.Results
             var e = Error.FromException(exception, eventId);
             return new ResultFail<TIdentifier,TContent>(id, e);
         }
+
+        
 
         #endregion
 

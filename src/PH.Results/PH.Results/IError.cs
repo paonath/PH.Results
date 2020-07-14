@@ -29,5 +29,9 @@ namespace PH.Results
         /// </summary>
         IError InnerError { get; }
 
+        /// <summary>Gets the deep of nested errors.</summary>
+        /// <value>The deep.</value>
+        int Deep { get; }
+
     }
 }

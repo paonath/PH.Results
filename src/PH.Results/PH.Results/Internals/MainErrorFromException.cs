@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace PH.Results.Internals
 {
+
     /// <summary>
     /// Main Error Instance with CallerFilePath initialized from Exception Stacktrace
     /// </summary>

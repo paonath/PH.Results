@@ -10,6 +10,7 @@ namespace PH.Results.Internals
     /// <seealso cref="PH.Results.IError" />
     public class MainError : Error, IError
     {
+        
         /// <summary>
         /// Initializes a new instance of the <see cref="MainError"/> class.
         /// </summary>
@@ -19,7 +20,8 @@ namespace PH.Results.Internals
         /// <param name="errorMessage">The error message.</param>
         /// <param name="innerError">The inner error.</param>
         /// <param name="eventId">The event identifier.</param>
-        internal MainError(string callerMemberName, string callerFilePath, int callerLineNumber,[NotNull] string errorMessage, IError innerError = null, EventId? eventId = null) 
+        internal MainError(string callerMemberName, string callerFilePath, int callerLineNumber
+                           , [NotNull] string errorMessage, IError innerError = null, EventId? eventId = null)
             : base(errorMessage, innerError, eventId)
         {
             CallerMemberName = callerMemberName;

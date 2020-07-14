@@ -10,6 +10,13 @@ namespace PH.Results.Internals
     /// <seealso cref="PH.Results.IError" />
     public class Error : IError
     {
+        /// <summary>
+        /// Gets a value indicating if Error is from exception.
+        /// </summary>
+        /// <value><c>true</c> if from exception; otherwise, <c>false</c>.</value>
+        public bool IsFromException { get; internal set; }
+
+
         /// <summary>Gets the error unique identifier.</summary>
         /// <value>The error unique identifier.</value>
         public Guid ErrorGuid { get; }
@@ -18,6 +25,8 @@ namespace PH.Results.Internals
         public Error()
         {
             ErrorGuid = Guid.NewGuid();
+            Deep = 0;
+            IsFromException = false;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Error"/> class.</summary>
@@ -30,6 +39,10 @@ namespace PH.Results.Internals
             ErrorMessage = errorMessage;
             InnerError   = innerError;
             ErrorEventId = eventId;
+            if (null != InnerError)
+            {
+                Deep = 1 + InnerError.Deep;
+            }
         }
 
         /// <summary>Initializes a new instance of the <see cref="Error"/> class.</summary>
@@ -71,6 +84,10 @@ namespace PH.Results.Internals
         /// </summary>
         public IError InnerError { get; set; }
 
+        /// <summary>Gets the deep of nested errors.</summary>
+        /// <value>The deep.</value>
+        public int Deep { get; }
+
         /// <summary>Return new instance of the specified error</summary>
         /// <param name="errorMessage">The error message.</param>
         /// <param name="innerError">The inner error.</param>
@@ -96,7 +113,9 @@ namespace PH.Results.Internals
             r = null == exception.InnerException 
                     ? new MainErrorFromException(exception.StackTrace, errorMessage) 
                     : new Error(exception.Message);
+            r.IsFromException = true;
 
+            
             if (null != eventId)
             {
                 r.ErrorEventId = eventId;
@@ -120,6 +139,7 @@ namespace PH.Results.Internals
             r = null == exception.InnerException 
                     ? new MainErrorFromException(exception.StackTrace, exception.Message) 
                     : new Error(exception.Message);
+            r.IsFromException = true;
 
             if (null != eventId)
             {
